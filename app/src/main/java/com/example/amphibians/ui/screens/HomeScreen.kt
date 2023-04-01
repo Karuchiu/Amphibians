@@ -1,5 +1,6 @@
 package com.example.amphibians.ui.screens
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,11 +18,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.amphibians.R
 import com.example.amphibians.model.AmphibianArticle
+import com.example.amphibians.ui.theme.AmphibiansTheme
 
 @Composable
 fun HomeScreen(
@@ -69,6 +72,7 @@ fun ArticleCard(
     amArticle: AmphibianArticle,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current as? Context
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -96,7 +100,7 @@ fun ArticleCard(
             )
 
             AsyncImage(
-                model = ImageRequest.Builder(context = LocalContext.current)
+                model = ImageRequest.Builder(context = context!!)
                     .data(amArticle.imgSrc)
                     .crossfade(true)
                     .build(),
@@ -117,5 +121,15 @@ fun ErrorScreen(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize()
     ) {
         Text(stringResource(id = R.string.loading_failed))
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun ArticleCardPreview() {
+    AmphibiansTheme() {
+        val mockCard = AmphibianArticle("Cow", "Mammal","I give milk","https://fakeurl.com/image.jpg")
+        ArticleCard(amArticle =  mockCard)
     }
 }
