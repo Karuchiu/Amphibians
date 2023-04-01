@@ -6,6 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.amphibians.R
 import com.example.amphibians.ui.screens.AmViewModel
 import com.example.amphibians.ui.screens.HomeScreen
@@ -24,7 +25,8 @@ fun AmphibianApp(modifier: Modifier = Modifier) {
                 .padding(it),
             color = MaterialTheme.colors.background
         ) {
-            val viewModel = AmViewModel()
+            val viewModel: AmViewModel =
+                viewModel(factory = AmViewModel.Factory)
             HomeScreen(amUiState = viewModel.amUiState)
         }
     }
